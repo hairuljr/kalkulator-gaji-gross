@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — Tools Mencari Gaji Gross
+ * Tema: light, clean fintech (sesuai mockup tools-gaji.jpeg).
+ * Tipografi: Lexend (heading) + Source Sans 3 (body) — dari UI UX Pro Max skill.
+ * Catatan: skill menyarankan style "Neumorphism" dark/orange, tetapi ditolak karena
+ * bertentangan dengan mockup dan berisiko aksesibilitas tinggi. Token di bawah
+ * mengikuti mockup (light + aksen biru).
+ */
+:root {
+  --background: #f8fafc; /* slate-50 */
+  --surface: #ffffff;
+  --foreground: #0f172a; /* slate-900 */
+  --muted-foreground: #64748b; /* slate-500 */
+  --border: #e2e8f0; /* slate-200 */
+
+  --primary: #2563eb; /* blue-600 */
+  --primary-hover: #1d4ed8; /* blue-700 */
+  --on-primary: #ffffff;
+
+  --success: #059669; /* emerald-600 */
+  --success-surface: #ecfdf5; /* emerald-50 */
+  --success-border: #a7f3d0; /* emerald-200 */
+
+  --destructive: #dc2626;
+  --ring: #2563eb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-success-border: var(--success-border);
+
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-source-sans);
+  --font-heading: var(--font-lexend);
+}
+
+/* Halaman ini didesain light-mode; matikan override dark bawaan scaffold. */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Angka rupiah rata & mudah dibaca (tabular figures). */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Aksesibilitas: hormati preferensi reduced-motion (checklist UI UX Pro Max). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
