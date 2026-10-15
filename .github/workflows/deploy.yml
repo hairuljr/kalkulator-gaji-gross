@@ -40,7 +40,8 @@ jobs:
         uses: crazy-max/ghaction-github-runtime@v3
 
       - name: Build image
-        run: docker buildx build --load \
+        run: |
+          docker buildx build --load \
             --cache-from type=gha --cache-to type=gha,mode=max \
             -t "$IMAGE:latest" .
 
