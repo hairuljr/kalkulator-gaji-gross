@@ -70,7 +70,7 @@ export function Calculator() {
       {/* Kartu Hasil — diisi penuh pada TASK-09 */}
       <section
         aria-labelledby="result-heading"
-        className="rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-7"
+        className="flex flex-col rounded-2xl border border-border bg-surface p-6 shadow-sm sm:p-7"
       >
         <div className="mb-6 flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
