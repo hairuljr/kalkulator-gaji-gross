@@ -20,7 +20,7 @@ interface ResultCardProps {
 export function ResultCard({ result, ptkp }: ResultCardProps) {
   if (!result) {
     return (
-      <div className="flex h-full min-h-48 flex-col items-center justify-center rounded-xl border border-dashed border-border bg-background p-8 text-center">
+      <div className="flex min-h-48 flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-border bg-background p-8 text-center">
         <EmptyIcon className="h-8 w-8 text-muted-foreground/50" />
         <p className="mt-3 text-sm text-muted-foreground">
           Masukkan Take Home Pay untuk melihat estimasi gaji gross.
