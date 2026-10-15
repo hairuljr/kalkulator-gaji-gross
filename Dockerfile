@@ -2,7 +2,10 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+# Audit/fund/notifier dimatikan agar log build bersih. Temuan audit hanya di
+# toolchain lint (dev-only, tidak ikut ke image runtime) dan belum ada patch upstream.
+ENV NPM_CONFIG_UPDATE_NOTIFIER=false
+RUN npm ci --no-audit --no-fund
 
 FROM node:22-alpine AS build
 WORKDIR /app
