@@ -18,6 +18,8 @@ permissions:
 env:
   IMAGE: kalkulator-gaji-gross
   CONTAINER: kalkulator-gaji-gross
+  # Arsitektur CPU VPS target (linux/amd64 atau linux/arm64).
+  PLATFORM: linux/arm64
 
 jobs:
   deploy:
@@ -31,8 +33,14 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
+      - name: Siapkan build lintas arsitektur
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Build image
-        run: docker build -t "$IMAGE:${{ github.sha }}" -t "$IMAGE:latest" .
+        run: docker buildx build --platform "$PLATFORM" --load -t "$IMAGE:latest" .
 
       - name: Siapkan SSH
         env:
