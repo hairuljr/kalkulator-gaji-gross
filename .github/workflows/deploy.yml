@@ -18,13 +18,12 @@ permissions:
 env:
   IMAGE: kalkulator-gaji-gross
   CONTAINER: kalkulator-gaji-gross
-  # Arsitektur CPU VPS target (linux/amd64 atau linux/arm64).
-  PLATFORM: linux/arm64
 
 jobs:
   deploy:
     name: Build image & deploy ke VPS
-    runs-on: ubuntu-latest
+    # Runner native sesuai arsitektur VPS (arm64) supaya tanpa emulasi QEMU.
+    runs-on: ubuntu-24.04-arm
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
 
     steps:
@@ -33,14 +32,17 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
-      - name: Siapkan build lintas arsitektur
-        uses: docker/setup-qemu-action@v3
-
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v3
 
+      # Mengekspos kredensial cache GHA ke langkah `run` (butuh untuk type=gha).
+      - name: Siapkan runtime cache GitHub
+        uses: crazy-max/ghaction-github-runtime@v3
+
       - name: Build image
-        run: docker buildx build --platform "$PLATFORM" --load -t "$IMAGE:latest" .
+        run: docker buildx build --load \
+            --cache-from type=gha --cache-to type=gha,mode=max \
+            -t "$IMAGE:latest" .
 
       - name: Siapkan SSH
         env:
