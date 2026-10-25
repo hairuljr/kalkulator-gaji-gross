@@ -61,11 +61,7 @@ jobs:
           SSH_USER: ${{ secrets.VPS_USER }}
         run: |
           SSH="ssh -i ~/.ssh/deploy_key $SSH_USER@$SSH_HOST"
-          docker save "$IMAGE:latest" | gzip | $SSH 'gunzip | docker load'
-          $SSH "docker rm -f $CONTAINER 2>/dev/null || true; \
-            docker run -d --name $CONTAINER --restart unless-stopped \
-              -p 127.0.0.1:3100:3000 $IMAGE:latest && \
-            docker image prune -f"
+          docker save "$IMAGE:latest" | gzip | $SSH 'sudo -n /usr/local/sbin/ci-deploy-gaji'
 
       - name: Cek kesehatan
         run: |
